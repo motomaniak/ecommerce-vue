@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     products: [],
-    user: []
+    user: null,
+    orders: []
   },
   mutations: {
     setProducts(state, payload){
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     setUser(state, payload){
       state.user = payload
+    },
+    setOrders(state, payload){
+      state.orders = payload
     }
   },
   actions: {

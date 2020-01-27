@@ -53,8 +53,9 @@ export default {
             fetch(url, options)
                 .then(res => res.json())
                 .then(data => {
+                    console.log(data)
                     this.$store.commit('setUser', data)
-                    this.$router.push('/')
+                    this.$router.push('/profile')
                 })  
         }
     }

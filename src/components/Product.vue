@@ -1,16 +1,17 @@
 <template>
     <div>
-    <b-card
-        :title="data.name"
-        :img-src="data.image"
-        img-alt="Image"
-        img-top
-        tag="article"
-        style="max-width: 20rem;"
-        class="mb-2"
-    >
-        <b-button href="#" @click="goTodetail(data.id, data.quantity)" variant="primary">View Details</b-button>
-    </b-card>
+        <!-- <b-col sm='auto'> -->
+            <b-card
+                :title="data.name"
+                :img-src="data.image"
+                img-alt="Image"
+                img-left
+                tag="article"
+                style="max-width: 100%; max-height:20rem;"
+            >
+                <b-button class='stretched-link' href="#" @click="goTodetail(data.id, data.quantity)" variant="primary">View Details</b-button>
+            </b-card>
+        <!-- </b-col> -->
     </div>
 </template>
 
@@ -27,5 +28,8 @@ export default {
 </script>
 
 <style scoped>
-
+.card-img-left {
+    height: 12em;
+    width: 100%;
+}
 </style>

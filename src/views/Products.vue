@@ -1,6 +1,10 @@
 <template>
   <div>
+    <b-container fluid>
+    <b-row>
     <product v-for='product in products' v-bind:data='product'></product>
+    </b-row>
+    </b-container>
   </div>
 </template>
 
