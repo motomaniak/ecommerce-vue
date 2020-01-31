@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import { auth } from './auth.module'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     products: [],
-    user: null,
-    orders: []
+    orders: [],
+    authenticated: false
   },
   mutations: {
     setProducts(state, payload){
@@ -18,10 +18,14 @@ export default new Vuex.Store({
     },
     setOrders(state, payload){
       state.orders = payload
+    },
+    setAuthentication(state, payload){
+      state.authenticated = payload
     }
   },
   actions: {
   },
   modules: {
+    auth
   }
 })

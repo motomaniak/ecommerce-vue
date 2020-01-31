@@ -96,41 +96,51 @@
 </template>
 
 <script>
+import authHeader from '../services/auth-header.js'
+
 export default {
     data() {
         return {
-            user: this.$store.state.user ? this.$store.state.user : null,
+            user: this.$store.state.auth.user.customer,//this.$store.state.auth.user.customer ? this.$store.state.auth.user.customer : null,
             form: {
-                first_name: this.$store.state.user ? this.$store.state.user.first_name : '',
-                last_name: this.$store.state.user ? this.$store.state.user.last_name : '',
-                email: this.$store.state.user ? this.$store.state.user.email : '',
-                address: this.$store.state.user ? this.$store.state.user.address : '',
-                city: this.$store.state.user ? this.$store.state.user.city : '',
-                state: this.$store.state.user ? this.$store.state.user.state : '',
-                zip: this.$store.state.user ? this.$store.state.user.zip : '',
-                phone: this.$store.state.user ? this.$store.state.user.phone : '',
-                // password: this.$store.state.user.password ? this.$store.state.user.password : '',
-                // confirmPassword: this.$store.state.user.password ? this.$store.state.user.password : ''
+                first_name: this.$store.state.auth.user.customer ? this.$store.state.auth.user.customer.first_name : '',
+                last_name: this.$store.state.auth.user.customer ? this.$store.state.auth.user.customer.last_name : '',
+                email: this.$store.state.auth.user.customer ? this.$store.state.auth.user.customer.email : '',
+                address: this.$store.state.auth.user.customer ? this.$store.state.auth.user.customer.address : '',
+                city: this.$store.state.auth.user.customer ? this.$store.state.auth.user.customer.city : '',
+                state: this.$store.state.auth.user.customer ? this.$store.state.auth.user.customer.state : '',
+                zip: this.$store.state.auth.user.customer ? this.$store.state.auth.user.customer.zip : '',
+                phone: this.$store.state.auth.user.customer ? this.$store.state.auth.user.customer.phone : '',
+                // password: this.$store.state.auth.user.customer.password ? this.$store.state.auth.user.customer.password : '',
+                // confirmPassword: this.$store.state.auth.user.customer.password ? this.$store.state.auth.user.customer.password : ''
             }
+        }
+    },
+    computed: {
+        loggedIn(){
+            return this.$store.state.auth.status.loggedIn
+        }
+    },
+    created() {
+        if(!this.loggedIn){
+            this.$router.push('/login')
         }
     },
     methods: {
         onSubmit(e){
             e.preventDefault()
-            let url = `http://localhost:5000/api/customer/${this.$store.state.user.id}`
+            let url = `http://localhost:5000/api/customer/${this.$store.state.auth.user.customer.id}`
             let options = {
                 method: 'PUT',
                 body: JSON.stringify(this.form),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: authHeader()
             }
 
             fetch(url, options)
                 .then(res => res.json())
                 .then(data => {
                     console.log(data)
-                    this.$store.commit('setUser', data)
+                    this.$store.commit('auth/user/customer', data)
                 })
                 .catch(err => {
                     console.log(err)
@@ -144,5 +154,13 @@ export default {
 </script>
 
 <style>
-
+.profile {
+    display: grid;
+    grid-template-columns: [labels] auto [controls] 1fr;
+    grid-auto-flow: row;
+    grid-gap: .8em .5em;
+    background: beige;
+    padding: 1.2em;
+    width: 36em;
+  }
 </style>

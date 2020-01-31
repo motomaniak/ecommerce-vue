@@ -1,7 +1,7 @@
 <template>
     <div class='orders'>
         <table>
-            <order v-for="order in orders" v-bind:data="order"></order>
+            <order v-for="order in orders" :key="order.id" v-bind:data="order"></order>
         </table>
     </div>
 </template>
@@ -16,15 +16,20 @@ export default {
     },
     computed: {
         orders() {
-            console.log(this.$store.state.orders)
             return this.$store.state.orders;
+        },
+        loggedIn(){
+            return this.$store.state.auth.status.loggedIn
         }
     },
     created() {
-    fetch(`http://localhost:5000/api/orders/${this.$store.state.user.id}`)
-    .then(res=>res.json())
-    .then(data => this.$store.commit('setOrders', data))
-  }
+        if(!this.loggedIn){
+            this.$router.push('/login')
+        }
+        fetch(`http://localhost:5000/api/orders/${this.$store.state.user.id}`)
+            .then(res=>res.json())
+            .then(data => this.$store.commit('setOrders', data))
+    }
 }
 </script>
 
