@@ -21,6 +21,7 @@ class AuthService {
 
     logout(){
         localStorage.removeItem('user')
+        this.$store.state.auth
     }
 
     register(user){
