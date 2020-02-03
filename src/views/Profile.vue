@@ -1,5 +1,11 @@
 <template>
-  <div class='profile'>
+  <div class='col-md-12'>
+      <div class="card card-container">
+      <img
+        id="profile-img"
+        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+        class="profile-img-card"
+      />
       <b-form @submit="onSubmit" @reset="onReset">
             <b-form-group id='input-group-1' label="Fisrt Name:" label-for="input-1">
                 <b-form-input
@@ -92,6 +98,7 @@
             <b-button type="submit" variant="primary">Submit</b-button>
             <b-button type="reset" variant="danger">Cancel</b-button>
         </b-form>
+      </div>
   </div>
 </template>
 
@@ -154,13 +161,36 @@ export default {
 </script>
 
 <style>
-.profile {
-    display: grid;
-    grid-template-columns: [labels] auto [controls] 1fr;
-    grid-auto-flow: row;
-    grid-gap: .8em .5em;
-    background: beige;
-    padding: 1.2em;
-    width: 36em;
-  }
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+.card-container.card {
+  max-width: 600px !important;
+  padding: 40px 40px;
+}
+
+.card {
+  background-color: beige;
+  padding: 20px 25px 30px;
+  margin: 0 auto 25px;
+  margin-top: 50px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.profile-img-card {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 10px;
+  display: block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
 </style>

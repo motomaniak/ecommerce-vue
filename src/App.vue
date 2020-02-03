@@ -8,7 +8,7 @@
             <b-nav-item href="#"><router-link to="/products">Products</router-link></b-nav-item>
             <b-nav-item v-if='!authenticated' href="#"><router-link v-if='!authenticated' to="/register">Register</router-link></b-nav-item>
             <b-nav-item v-if='!authenticated' href="#"><router-link v-if='!authenticated' to="/login">Login</router-link></b-nav-item>
-            <b-nav-item v-if='authenticated' href='#'><router-link v-if='authenticated' to='/login' v-on:click.native='logout()' replace>Logout</router-link></b-nav-item>
+            <b-nav-item v-if='authenticated' @click.prevent='logout' href='#'><router-link v-if='authenticated' to='/login' replace><font-awesome-icon icon="sign-out-alt" />Logout</router-link></b-nav-item>
             <b-nav-item v-if='authenticated' href="#"><router-link v-if='authenticated' to="/profile">Profile</router-link></b-nav-item>
             <b-nav-item v-if='authenticated' href="#"><router-link v-if='authenticated' to="/orders">Orders</router-link></b-nav-item>
           </b-navbar-nav>
@@ -23,7 +23,6 @@ export default {
   data() {
     return {
       authenticated: this.$store.state.auth.status.loggedIn,
-      // user: this.$store.state.user ? this.$store.state.user : null
     }
   },
   methods: {
@@ -31,14 +30,12 @@ export default {
       this.authenticated = this.$store.state.auth.status.loggedIn
     },
     logout(){
-      this.$store.dispatch('auth/logout').then(
+      this.$store.dispatch('auth/logout', this.$store.state.auth.user).then(
         () => {
           this.authenticated = this.$store.state.auth.status.loggedIn
           this.$router.push('/login')
         }
       )
-      // this.authenticated = false
-      // this.$store.state.auth.status.loggedIn = false
     }
   }
 }
@@ -47,5 +44,38 @@ export default {
 <style>
 .navbar {
   background-color: #80ced6 !important;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+.card-container.card {
+  max-width: 600px !important;
+  padding: 40px 40px;
+}
+
+.card {
+  background-color: beige;
+  padding: 20px 25px 30px;
+  margin: 0 auto 25px;
+  margin-top: 50px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.profile-img-card {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 10px;
+  display: block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
 }
 </style>

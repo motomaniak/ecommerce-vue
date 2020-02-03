@@ -26,7 +26,7 @@ export default {
         if(!this.loggedIn){
             this.$router.push('/login')
         }
-        fetch(`http://localhost:5000/api/orders/${this.$store.state.user.id}`)
+        fetch(`http://localhost:5000/api/orders/${this.$store.state.auth.user.customer.id}`)
             .then(res=>res.json())
             .then(data => this.$store.commit('setOrders', data))
     }

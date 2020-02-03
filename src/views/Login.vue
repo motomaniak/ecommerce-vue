@@ -1,6 +1,11 @@
 <template>
     <div class='col-md-12'>
-        <div class='card card-con'>
+        <div class='card card-container'>
+            <img
+                id="profile-img"
+                src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                class="profile-img-card"
+            />
             <b-form @submit.prevent="handleLogin">
                 <b-form-group 
                     id='input-group-1'
@@ -16,11 +21,6 @@
                         placeholder="Enter email"
                         name="email"
                     ></b-form-input>
-                    <!-- <div
-                        v-if="errors.has('email')"
-                        class="alert alert-danger"
-                        role="alert"
-                    >Email is required!</div> -->
                 </b-form-group>
                 <b-form-group id='input-group-2' label="Password:" label-for="input-2">
                     <b-form-input
@@ -31,11 +31,6 @@
                         type="password"
                         name='password'
                     ></b-form-input>
-                    <!-- <div
-                        v-if="errors.has('password')"
-                        class="alert alert-danger"
-                        role="alert"
-                    >Password is required!</div> -->
                 </b-form-group>
                 <div class="form-group">
                 <button class="btn btn-primary btn-block" :disabled="loading">
@@ -43,10 +38,9 @@
                     <span>Login</span>
                 </button>
                 </div>
-                <!-- <div class="form-group">
-                <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
-                </div> -->
-                <!-- <b-button type="submit" variant="primary">Submit</b-button> -->
+                <div class="form-group">
+                    <div v-if="message" class="alert alert-danger" role="alert"><font-awesome-icon icon='exclamation' />{{ ' ' + message}}</div>
+                </div>
             </b-form>
         </div>
     </div>

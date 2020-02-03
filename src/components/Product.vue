@@ -28,8 +28,11 @@ export default {
 </script>
 
 <style scoped>
-.card-img-left {
-    height: 12em;
-    width: 100%;
+.card-img-top {
+    height: auto;
+    width: 200px !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 </style>
