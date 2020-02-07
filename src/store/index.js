@@ -4,28 +4,32 @@ import { auth } from './auth.module'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    products: [],
-    orders: [],
-    authenticated: false
-  },
-  mutations: {
-    setProducts(state, payload){
-      state.products = payload
+    state: {
+        products: [],
+        orders: [],
+        authenticated: false,
+        cart: {}
     },
-    setUser(state, payload){
-      state.user = payload
+    mutations: {
+        setProducts(state, payload){
+            state.products = payload
+        },
+        setUser(state, payload){
+            state.auth.user = payload
+        },
+        setOrders(state, payload){
+            state.orders = payload
+        },
+        setAuthentication(state, payload){
+            state.authenticated = payload
+        },
+        setCart(state, payload){
+            state.cart = payload
+        }
     },
-    setOrders(state, payload){
-      state.orders = payload
+    actions: {
     },
-    setAuthentication(state, payload){
-      state.authenticated = payload
+    modules: {
+        auth
     }
-  },
-  actions: {
-  },
-  modules: {
-    auth
-  }
 })

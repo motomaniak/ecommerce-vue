@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <b-container fluid>
-    <b-row>
-    <product v-for='product in products' :key="product.id" v-bind:data='product'></product>
-    </b-row>
-    </b-container>
-  </div>
+    <div>
+        <b-container fluid>
+            <b-row>
+                <product v-for='product in products' :key="product.id" v-bind:data='product'></product>
+            </b-row>
+        </b-container>
+    </div>
 </template>
 
 <script>
@@ -13,19 +13,18 @@
 import Product from '@/components/Product.vue'
 
 export default {
-  name: 'products',
-  components: {
-    Product
-  },
-  computed: {
-    products() {
-      return this.$store.state.products
+    components: {
+        Product
+    },
+    computed: {
+        products() {
+            return this.$store.state.products
+        }
+    },
+    created() {
+        fetch('http://localhost:5000/api/products')
+        .then(res=>res.json())
+        .then(data => this.$store.commit('setProducts', data))
     }
-  },
-  created() {
-    fetch('http://localhost:5000/api/products')
-    .then(res=>res.json())
-    .then(data => this.$store.commit('setProducts', data))
-  }
 }
 </script>

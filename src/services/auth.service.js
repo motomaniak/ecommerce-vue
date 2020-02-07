@@ -12,9 +12,7 @@ class AuthService {
         return fetch(API_URL + 'login', options)
             .then(res => {
                 if(!res.ok){
-                    console.log(res)
                     res.json()
-                    console.log(res)
                     throw Error("Email or password is incorrect")
                 }
                 return res.json()
@@ -23,7 +21,6 @@ class AuthService {
                 if(data.access_token){
                     localStorage.setItem('user', data.access_token)
                 }
-                console.log(data)
                 return data
             })
     }

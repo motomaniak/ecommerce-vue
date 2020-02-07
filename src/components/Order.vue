@@ -1,6 +1,6 @@
 <template>
     <div>
-        <tr>
+        <tr @click="goTodetail(data)">
             <td><b-img thumbnail fluid :src=data.order_details[0].product.image ></b-img></td>
             <td>{{getDate(data.order_date)}}</td>
             <td>{{data.status}}</td>
@@ -16,6 +16,9 @@ export default {
         getDate(date){
             let d = new Date(date)
             return d.toString().slice(0, 16)
+        },
+        goTodetail(data) {
+            this.$router.push({name:'OrderDetail', params:{data:data}})
         }
     },
     props: [
