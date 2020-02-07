@@ -7,7 +7,6 @@ export default new Vuex.Store({
     state: {
         products: [],
         orders: [],
-        authenticated: false,
         cart: {}
     },
     mutations: {
@@ -25,6 +24,10 @@ export default new Vuex.Store({
         },
         setCart(state, payload){
             state.cart = payload
+        },
+        deleteCartItem(state, payload){
+            let index = state.cart.order_details.findIndex(item => item.product.id == payload)
+            state.cart.order_details.splice(index, 1)
         }
     },
     actions: {

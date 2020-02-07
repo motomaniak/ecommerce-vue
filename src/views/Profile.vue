@@ -150,12 +150,11 @@ export default {
                     if(res.status === 200){
                         this.modalShow = !this.modalShow
                     }
-                    res.json()
-                    console.log('res', res)
+                    return res.json()
                 })
                 .then(data => {
-                    console.log("response data", JSON.stringify(data))
-                    this.$store.commit('auth/loginSuccess', data, {root:true})
+                    this.$store.commit('auth/updateSuccess', data, {root:true})
+                    this.$emit('setName', this.$store.state.auth.user.customer.first_name)
                 })
                 .catch(err => {
                     console.log("Error getting profile", err)

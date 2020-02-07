@@ -25,7 +25,6 @@ export default {
             return this.$store.state.auth.status.loggedIn
         },
         cart(){
-            console.log(this.$store.state.cart)
             return this.$store.state.cart.order_details
         }
     },

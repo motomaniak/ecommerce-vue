@@ -37,6 +37,9 @@ export default {
         setAuthenticated(status){
             this.authenticated = this.$store.state.auth.status.loggedIn
         },
+        setName(){
+            this.currentUser()
+        },
         logout(){
             this.$store.dispatch('auth/logout', this.$store.state.auth.user)
             .then(() => {
@@ -44,7 +47,15 @@ export default {
                 this.$router.push('/login')
             })
         }
+    },
+    beforeMount() {
+        //If the user closes the window without 
+        //logging out we want to log them out
+        window.addEventListener('beforeunload', (e)=> {
+            this.logout()
+        })
     }
+    
 }
 </script>
 

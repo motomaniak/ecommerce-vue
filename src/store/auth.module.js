@@ -43,6 +43,9 @@ export const auth = {
             state.status.loggedIn = true
             state.user = user
         },
+        updateSuccess(state, user){
+            state.user.customer = user
+        },
         loginFailure(state){
             state.status.loggedIn = false
             state.user = null

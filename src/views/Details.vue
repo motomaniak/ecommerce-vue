@@ -54,6 +54,7 @@ export default {
             slide: 0,
             sliding: null,
             modalShow: false,
+            modalSuccess: false,
         }
     },
     methods: {
@@ -67,7 +68,6 @@ export default {
             if(!this.loggedIn){
                 this.modalShow = !this.modalShow
             }else{
-                console.log(this.$store.state)
                 let url = `http://localhost:5000/api/order/add`
                 let options = {
                     method: 'POST',
@@ -78,8 +78,21 @@ export default {
                 }
 
                 fetch(url, options)
-                    .then(res => res.json())
-                    .then(data => console.log(data))
+                    .then(res => {
+                        if(res.status === 200){
+                            this.$bvToast.toast("Item's added successfully", {
+                                title: 'Add Success',
+                                autoHideDelay: 2000,
+                            })
+                        }else{
+                            return res.json()
+                        }
+                    }).then(data => {
+                        this.$bvToast.toast(data.error, {
+                                title: 'Error',
+                                autoHideDelay: 2000,
+                            })
+                    })
                     .catch(err => {
                         console.log(err)
                     })
