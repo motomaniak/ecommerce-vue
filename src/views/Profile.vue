@@ -138,7 +138,7 @@ export default {
     methods: {
         onSubmit(e){
             e.preventDefault()
-            let url = `http://localhost:5000/api/customer/${this.$store.state.auth.user.customer.id}`
+            let url = `http://motomaniak.net:5000/api/customer/${this.$store.state.auth.user.customer.id}`
             let options = {
                 method: 'PUT',
                 body: JSON.stringify(this.form),
