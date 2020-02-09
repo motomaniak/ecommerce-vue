@@ -33,7 +33,7 @@ export default {
             this.$router.push('/login')
         }
 
-        let url = `http://localhost:5000/api/cart`
+        let url = `http://motomaniak.net:5000/api/cart`
         let options = {
             method: 'GET',
             headers: authHeader()
