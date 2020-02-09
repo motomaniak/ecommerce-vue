@@ -60,7 +60,7 @@ export default {
     methods: {
         onSubmit(e) {
             e.preventDefault()
-            let url = 'http://localhost:5000/api/auth/register'
+            let url = 'http://motomaniak.net:5000/api/auth/register'
             let options = {
                 method: 'POST',
                 body: JSON.stringify(this.form),
