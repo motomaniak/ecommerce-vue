@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api/auth/'
+const API_URL = 'http://motomaniak.net:5000/api/auth/'
 
 class AuthService {
     login(user){
