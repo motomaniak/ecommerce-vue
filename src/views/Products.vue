@@ -22,7 +22,7 @@ export default {
         }
     },
     created() {
-        fetch('http://localhost:5000/api/products')
+        fetch('http://motomaniak.net:5000/api/products')
         .then(res=>res.json())
         .then(data => this.$store.commit('setProducts', data))
     }
