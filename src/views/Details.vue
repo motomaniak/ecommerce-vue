@@ -88,10 +88,12 @@ export default {
                             return res.json()
                         }
                     }).then(data => {
-                        this.$bvToast.toast(data.error, {
-                                title: 'Error',
-                                autoHideDelay: 2000,
-                            })
+                        if(data != null){
+                            this.$bvToast.toast(data.error, {
+                                    title: 'Error',
+                                    autoHideDelay: 2000,
+                                })
+                        }
                     })
                     .catch(err => {
                         console.log(err)

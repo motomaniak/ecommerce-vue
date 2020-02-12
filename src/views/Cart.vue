@@ -4,11 +4,9 @@
             <h1>My Cart</h1>
             <a href="#" class="continue">Continue Shopping</a>
         </div>
-        <div class="cart">
-            <ul class="cartWrap">
-                <cart-item v-for="(item, index) in cart" v-bind:key="item.id" v-bind:data="item" v-bind:index="index"></cart-item>
-            </ul>
-        </div>
+        <transition-group id='cart' name='list' tag='ul' class="slide-fade cartWrap cart">
+            <cart-item v-for="(item, index) in cart" v-bind:key="item.product.id" v-bind:data="item" v-bind:index="index"></cart-item>
+        </transition-group>
     </div>
 </template>
 
@@ -47,6 +45,27 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import '../assets/css.scss'
-
+@import '../assets/css.scss';
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active, .list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
 </style>
