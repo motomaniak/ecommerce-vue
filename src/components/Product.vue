@@ -9,7 +9,7 @@
                 tag="article"
                 style="max-width: 20rem;"
             >
-                <b-button class='stretched-link' href="#" @click="goTodetail(data.id, data.quantity)" variant="primary">View Details</b-button>
+                <b-button href="#" @click="goTodetail(data.id, data.quantity)" variant="primary">View Details</b-button>
             </b-card>
         </b-col>
     </div>
