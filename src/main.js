@@ -23,6 +23,7 @@ Vue.config.productionTip = false
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
+Vue.prototype.$API_URL = process.env.VUE_APP_ROOT_API
 
 new Vue({
     router,

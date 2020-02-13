@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+const API_URL = 'http://motomaniak.net:5000/api/auth/'
+=======
 const API_URL = process.env.VUE_APP_ROOT_API
+>>>>>>> master
 
 class AuthService {
     login(user){

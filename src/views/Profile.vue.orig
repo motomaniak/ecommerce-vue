@@ -138,7 +138,11 @@ export default {
     methods: {
         onSubmit(e){
             e.preventDefault()
+<<<<<<< HEAD
+            let url = `http://motomaniak.net:5000/api/customer/${this.$store.state.auth.user.customer.id}`
+=======
             let url = this.$API_URL + `/customer/${this.$store.state.auth.user.customer.id}`
+>>>>>>> master
             let options = {
                 method: 'PUT',
                 body: JSON.stringify(this.form),

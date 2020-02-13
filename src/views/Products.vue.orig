@@ -22,7 +22,11 @@ export default {
         }
     },
     created() {
+<<<<<<< HEAD
+        fetch('http://motomaniak.net:5000/api/products')
+=======
         fetch(this.$API_URL + '/products')
+>>>>>>> master
         .then(res=>res.json())
         .then(data => this.$store.commit('setProducts', data))
     }
