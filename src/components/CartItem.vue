@@ -29,7 +29,7 @@ export default {
     },
     methods: {
         removeItem(product_id, order_id){
-            let url = `http://localhost:5000/api/cart`
+            let url = this.$API_URL + `/cart`
             let options = {
                     method: 'DELETE',
                     body: JSON.stringify({"product_id": product_id, "order_id": order_id}),
