@@ -16,16 +16,13 @@ export default {
         return {
             order_date: this.$route.params.data.order_date,
             order_id: this.$route.params.data.id,
-            order_details: this.$route.params.data,
-            // products: orderProduts()
+            order_details: this.$route.params.data
         }
     },
     methods: {
         orderProduts(){
             let products = []
-            // console.log(this.$route.params.data.order_details)
             for(let product of this.$route.params.data.order_details){
-                // console.log(product)
                 products.push(product.product.name)
                 products.push(product.quantity)
                 products.push(product.list_price)

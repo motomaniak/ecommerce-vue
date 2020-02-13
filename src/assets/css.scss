@@ -308,6 +308,9 @@ a.remove {
 
 /* TOTAL AND CHECKOUT  */
 .subtotal {
+    ul {
+        list-style: none;
+    }
     float: right;
     width: 35%;
     .totalRow {

@@ -2,11 +2,28 @@
     <div>
         <div class="heading cf">
             <h1>My Cart</h1>
-            <a href="#" class="continue">Continue Shopping</a>
+            <a href="#/products" class="continue">Continue Shopping</a>
         </div>
-        <transition-group id='cart' name='list' tag='ul' class="slide-fade cartWrap cart">
-            <cart-item v-for="(item, index) in cart" v-bind:key="item.product.id" v-bind:data="item" v-bind:index="index"></cart-item>
-        </transition-group>
+        <div v-if="cart()">
+            Your Cart is Empty! Add some items 
+        </div>
+        <div v-else>
+            <transition-group id='cart' name='list' tag='ul' class="slide-fade cartWrap cart">
+                <cart-item v-for="(item, index) in cart" v-bind:key="item.product.id" v-bind:data="item" v-bind:index="index"></cart-item>
+            </transition-group>
+            <div class="promoCode"><label for="promo">Have A Promo Code?</label><input type="text" name="promo" placholder="Enter Code" />
+                <a href="#" class="btn"></a>
+            </div>
+            <div class="cartWrap wrap cart subtotal cf">
+                <ul>
+                    <li class="totalRow"><span class="label">Subtotal</span><span class="value">${{cartTotal}}</span></li>
+                    <li class="totalRow"><span class="label">Shipping</span><span class="value">$5.00</span></li>
+                    <li class="totalRow"><span class="label">Tax</span><span class="value">${{(cartTotal * .0825).toFixed(2)}}</span></li>
+                    <li class="totalRow final"><span class="label">Total</span><span class="value">${{(cartTotal + 5 + (cartTotal *.0825)).toFixed(2)}}</span></li>
+                    <li class="totalRow"><a href="#" @click='checkOut(order_id)' class="btn continue">Checkout</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -18,7 +35,19 @@ export default {
     components: {
         CartItem
     },
+    data() {
+        return {
+            order_id: this.$store.state.cart ? this.$store.state.cart.id : null
+        }
+    },
     computed: {
+        cartTotal() {
+            let total = 0
+            for(let item of this.$store.state.cart.order_details){
+                total += (item.list_price * item.quantity)
+            }
+            return total
+        },
         loggedIn(){
             return this.$store.state.auth.status.loggedIn
         },
@@ -38,8 +67,30 @@ export default {
         }
         
         fetch(url, options)
-            .then(res=>res.json())
+            .then(res => res.json())
             .then(data => this.$store.commit('setCart', data))
+    },
+    methods: {
+        checkOut(order_id){
+            let url = `http://localhost:5000/api/cart/checkout`
+            let options = {
+                method: 'PUT',
+                body: JSON.stringify({order_id: order_id}),
+                headers: {
+                    'Content-Type':'application/json'
+                }
+            }
+            
+            fetch(url, options)
+                .then(res => {
+                    if(res.status === 200){
+                        this.$store.commit('setCart', null)
+                        this.$router.push('/orders')
+                    }
+                    res.json()
+                })
+                // .then(data => this.$store.commit('setCart', null))
+        }
     }
 }
 </script>
@@ -56,16 +107,5 @@ export default {
 /* .slide-fade-leave-active below version 2.1.8 */ {
   transform: translateX(10px);
   opacity: 0;
-}
-.list-item {
-  display: inline-block;
-  margin-right: 10px;
-}
-.list-enter-active, .list-leave-active {
-  transition: all 1s;
-}
-.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
-  opacity: 0;
-  transform: translateY(30px);
 }
 </style>
