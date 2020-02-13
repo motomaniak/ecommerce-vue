@@ -4,7 +4,7 @@
             <h1>My Cart</h1>
             <a href="#/products" class="continue">Continue Shopping</a>
         </div>
-        <div v-if="cart()">
+        <div v-if="cart">
             Your Cart is Empty! Add some items 
         </div>
         <div v-else>
@@ -60,7 +60,7 @@ export default {
             this.$router.push('/login')
         }
 
-        let url = `http://localhost:5000/api/cart`
+        let url = this.$API_URL + `/cart`
         let options = {
             method: 'GET',
             headers: authHeader()
@@ -72,7 +72,7 @@ export default {
     },
     methods: {
         checkOut(order_id){
-            let url = `http://localhost:5000/api/cart/checkout`
+            let url = this.$API_URL + `/cart/checkout`
             let options = {
                 method: 'PUT',
                 body: JSON.stringify({order_id: order_id}),

@@ -68,7 +68,7 @@ export default {
             if(!this.loggedIn){
                 this.modalShow = !this.modalShow
             }else{
-                let url = `http://localhost:5000/api/order/add`
+                let url = this.$API_URL + `/order/add`
                 let options = {
                     method: 'POST',
                     body: JSON.stringify({"product_id":pId, "customer_id":this.$store.state.auth.user.customer.id, "quantity":parseInt(document.getElementById('quantity').value), "discount":0, "date": new Date(0)}),

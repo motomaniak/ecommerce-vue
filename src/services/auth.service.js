@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api/auth/'
+const API_URL = process.env.VUE_APP_ROOT_API
 
 class AuthService {
     login(user){
@@ -9,7 +9,7 @@ class AuthService {
                 'Content-Type': 'application/json'
             }
         }
-        return fetch(API_URL + 'login', options)
+        return fetch(API_URL + '/auth/login', options)
             .then(res => {
                 if(!res.ok){
                     res.json()
@@ -38,7 +38,7 @@ class AuthService {
                 'Content-Type': 'application/json'
             }
         }
-        return fetch(API_URL + 'register', options)
+        return fetch(API_URL + '/auth/register', options)
     }
 }
 

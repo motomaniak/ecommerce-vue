@@ -22,7 +22,7 @@ export default {
         }
     },
     created() {
-        fetch('http://localhost:5000/api/products')
+        fetch(this.$API_URL + '/products')
         .then(res=>res.json())
         .then(data => this.$store.commit('setProducts', data))
     }
