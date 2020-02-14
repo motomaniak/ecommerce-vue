@@ -4,7 +4,7 @@
             <h1>My Cart</h1>
             <a href="#/products" class="continue">Continue Shopping</a>
         </div>
-        <div v-if="cart">
+        <div v-if="!cart">
             Your Cart is Empty! Add some items 
         </div>
         <div v-else>
@@ -12,7 +12,7 @@
                 <cart-item v-for="(item, index) in cart" v-bind:key="item.product.id" v-bind:data="item" v-bind:index="index"></cart-item>
             </transition-group>
             <div class="promoCode"><label for="promo">Have A Promo Code?</label><input type="text" name="promo" placholder="Enter Code" />
-                <a href="#" class="btn"></a>
+                <a href="#" class="btn inactive"></a>
             </div>
             <div class="cartWrap wrap cart subtotal cf">
                 <ul>
@@ -20,7 +20,7 @@
                     <li class="totalRow"><span class="label">Shipping</span><span class="value">$5.00</span></li>
                     <li class="totalRow"><span class="label">Tax</span><span class="value">${{(cartTotal * .0825).toFixed(2)}}</span></li>
                     <li class="totalRow final"><span class="label">Total</span><span class="value">${{(cartTotal + 5 + (cartTotal *.0825)).toFixed(2)}}</span></li>
-                    <li class="totalRow"><a href="#" @click='checkOut(order_id)' class="btn continue">Checkout</a></li>
+                    <li class="totalRow"><a href="#" @click='checkOut()' class="btn continue">Checkout</a></li>
                 </ul>
             </div>
         </div>
@@ -35,11 +35,6 @@ export default {
     components: {
         CartItem
     },
-    data() {
-        return {
-            order_id: this.$store.state.cart ? this.$store.state.cart.id : null
-        }
-    },
     computed: {
         cartTotal() {
             let total = 0
@@ -52,7 +47,10 @@ export default {
             return this.$store.state.auth.status.loggedIn
         },
         cart(){
-            return this.$store.state.cart.order_details
+            return this.$store.state.cart ? this.$store.state.cart.order_details : null
+        },
+        order_id () {
+            return this.$store.state.cart.id
         }
     },
     created(){
@@ -71,25 +69,25 @@ export default {
             .then(data => this.$store.commit('setCart', data))
     },
     methods: {
-        checkOut(order_id){
+        checkOut(){
             let url = this.$API_URL + `/cart/checkout`
             let options = {
                 method: 'PUT',
-                body: JSON.stringify({order_id: order_id}),
+                body: JSON.stringify({"order_id": this.order_id}),
                 headers: {
                     'Content-Type':'application/json'
-                }
             }
+        }
             
-            fetch(url, options)
-                .then(res => {
-                    if(res.status === 200){
-                        this.$store.commit('setCart', null)
-                        this.$router.push('/orders')
-                    }
-                    res.json()
-                })
-                // .then(data => this.$store.commit('setCart', null))
+        fetch(url, options)
+            .then(res => {
+                if(res.status === 200){
+                    this.$store.commit('setCart', null)
+                    this.$router.push('/orders')
+                }
+                res.json()
+            })
+            // .then(data => this.$store.commit('setCart', null))
         }
     }
 }
