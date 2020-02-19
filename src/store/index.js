@@ -28,6 +28,10 @@ export default new Vuex.Store({
         deleteCartItem(state, payload){
             let index = state.cart.order_details.findIndex(item => item.product.id == payload)
             state.cart.order_details.splice(index, 1)
+        },
+        updateCartItem(state, payload){
+            let index = state.cart.order_details.findIndex(item => item.product.id == payload.id)
+            state.cart.order_details[index].quantity = payload.quantity
         }
     },
     actions: {
