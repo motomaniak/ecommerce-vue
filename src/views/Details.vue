@@ -54,7 +54,6 @@ export default {
             slide: 0,
             sliding: null,
             modalShow: false,
-            modalSuccess: false,
         }
     },
     methods: {
@@ -84,6 +83,8 @@ export default {
                                 title: 'Add Success',
                                 autoHideDelay: 2000,
                             })
+                        }else if(res.status === 401){
+                            this.modalShow = !this.modalShow
                         }else{
                             return res.json()
                         }

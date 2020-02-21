@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import authHeader from '../services/auth-header'
 export default {
     props: ['data', 'index'],
     data(){
@@ -37,12 +38,11 @@ export default {
         removeItem(product_id, order_id){
             let url = this.$API_URL + `/cart`
             let options = {
-                    method: 'DELETE',
-                    body: JSON.stringify({"product_id": product_id, "order_id": order_id}),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }
+                method: 'DELETE',
+                body: JSON.stringify({"product_id": product_id, "order_id": order_id}),
+                headers: authHeader()
+            }
+
             fetch(url, options)
                 .then(res => {
                     if(res.status === 200){
@@ -53,8 +53,9 @@ export default {
                         if(this.$store.state.cart.order_details.length == 0){
                             this.$store.commit('setCart', null)
                         }
-                    }else{
-
+                    }
+                    if(res.status === 401){
+                        this.$parent.logout()
                     }
                 })
         },
@@ -62,7 +63,8 @@ export default {
             let url = this.$API_URL + `/cart`
             let options = {
                 method: 'PUT',
-                body: JSON.stringify({'product_id': product_id, 'order_id': order_id, 'quantity': this.quantity})
+                body: JSON.stringify({'product_id': product_id, 'order_id': order_id, 'quantity': this.quantity}),
+                header: authHeader()
             }
 
             if(this.quantity < 1){
@@ -79,7 +81,10 @@ export default {
                                 autoHideDelay: 2000,
                             })
                             this.$store.commit("updateCartItem", {'id':product_id, 'quantity':this.quantity})
-                        }else{
+                        }else if(res.status === 401){
+                            this.$$parent.logout()
+                        }
+                        else{
                             return res.json()
                         }
                     })
