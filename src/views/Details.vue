@@ -1,6 +1,5 @@
 <template>
     <div class='details'>
-        
         <div v-for="product in products" :key="product.id">
             <div v-if="pId == product.id">
                 <b-carousel
@@ -9,21 +8,25 @@
                     :interval="4000"
                     controls
                     indicators
-                    background="#ababab"
-                    img-width="1024"
-                    img-height="480"
+                    background="white"
+                    img-width="400"
+                    img-height="auto"
                     style="text-shadow: 1px 1px 2px #333;"
                     @sliding-start="onSlideStart"
                     @sliding-end="onSlideEnd"
                 >
-                <b-carousel-slide :img-src="product.image" fluid thumbnail></b-carousel-slide>
+                <b-carousel-slide :img-src="product.image"></b-carousel-slide>
+                <div v-if="product.images.length > 0">
+                    <b-carousel-slide v-for="image in product.images" :key="image" :img-src="image.image_location"></b-carousel-slide>
+                </div>  
                 </b-carousel>
-                
-                <h3>{{ product.name }}</h3>
-                {{ product.description }}
-                <b-form-select id='quantity' v-model='selected' :options="options"></b-form-select>
-                <b-button @click='addToCart(pId)'>Add</b-button>
-                <b-modal header-bg-variant="danger" v-model="modalShow">You must be logged in for that!</b-modal>
+                <div class='section'>        
+                    <h3>{{ product.name }}</h3>
+                    {{ product.description }}
+                    <b-form-select id='quantity' v-model='selected' :options="options"></b-form-select>
+                    <b-button @click='addToCart(pId)'>Add</b-button>
+                    <b-modal header-bg-variant="danger" v-model="modalShow">You must be logged in for that!</b-modal>
+                </div>
             </div>
         </div>
     </div>
@@ -106,7 +109,14 @@ export default {
 </script>
 
 <style>
-img {
-    max-width: 500px;
+.carousel{
+    width: 400px !important;
+    float: left;
+}
+.details{
+    position: relative;
+}
+.section{
+    margin-left: 400px;
 }
 </style>
