@@ -150,6 +150,9 @@ export default {
                     if(res.status === 200){
                         this.modalShow = !this.modalShow
                     }
+                    if(res.status === 401){
+                        this.$parent.logout()
+                    }
                     return res.json()
                 })
                 .then(data => {

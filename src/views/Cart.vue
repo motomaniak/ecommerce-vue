@@ -24,6 +24,7 @@
                 </ul>
             </div>
         </div>
+        <b-modal header-bg-variant="danger" v-model="modalShow">Session Expired! Please log back in.</b-modal>
     </div>
 </template>
 
@@ -34,6 +35,11 @@ import CartItem from '../components/CartItem.vue'
 export default {
     components: {
         CartItem
+    },
+    data() {
+        return {
+            modalShow: false
+        }
     },
     computed: {
         cartTotal() {
@@ -65,7 +71,13 @@ export default {
         }
         
         fetch(url, options)
-            .then(res => res.json())
+            .then(res => {
+                if(res.status === 401){
+                    this.modalShow = !this.modalShow
+                    this.$parent.logout()
+                }
+                return res.json()
+            })
             .then(data => this.$store.commit('setCart', data))
     },
     methods: {
@@ -74,21 +86,21 @@ export default {
             let options = {
                 method: 'PUT',
                 body: JSON.stringify({"order_id": this.order_id}),
-                headers: {
-                    'Content-Type':'application/json'
+                headers: authHeader()
             }
-        }
+        
             
-        fetch(url, options)
-            .then(res => {
-                if(res.status === 200){
-                    this.$store.commit('setCart', null)
-                    this.$router.push('/orders')
-                }
-                res.json()
-            })
-            // .then(data => this.$store.commit('setCart', null))
-        }
+            fetch(url, options)
+                .then(res => {
+                    if(res.status === 200){
+                        this.$store.commit('setCart', null)
+                        this.$router.push('/orders')
+                    }else if(res.status === 401){
+                        this.modalShow = !this.modalShow
+                        this.$parent.logout()
+                    }
+                })
+            }
     }
 }
 </script>
