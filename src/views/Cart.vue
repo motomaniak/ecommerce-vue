@@ -65,13 +65,11 @@ export default {
         }
 
         let url = this.$API_URL + `/cart`
-        let options = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-        
+	let options = {
+		method: 'GET',
+		headers: authHeader()
+	}
+
         fetch(url, options)
             .then(res => {
                 if(res.status === 401){
