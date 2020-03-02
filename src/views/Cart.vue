@@ -86,9 +86,7 @@ export default {
             let options = {
                 method: 'PUT',
                 body: JSON.stringify({"order_id": this.order_id}),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: authHeader()
             }
         
             
