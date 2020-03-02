@@ -67,7 +67,9 @@ export default {
         let url = this.$API_URL + `/cart`
         let options = {
             method: 'GET',
-            headers: authHeader()
+            headers: {
+                'Content-Type': 'application/json'
+            }
         }
         
         fetch(url, options)
