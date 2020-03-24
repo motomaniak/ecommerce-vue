@@ -21,7 +21,7 @@ export default {
     methods: {
         goTodetail(id, quantity) {
             let productId = id
-            this.$router.push({name:'details', params:{pId:productId, quantity:quantity}})
+            this.$router.push({name:'details', params:{productId: productId, quantity: quantity}})
         }
     }
 }
