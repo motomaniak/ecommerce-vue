@@ -1,7 +1,7 @@
 <template>
     <div class='details'>
         <div v-for="product in products" :key="product.id">
-            <b-container v-if="pId == product.id">
+            <b-container v-if="productId == product.id">
                 <b-row>
                     <b-col>
                         <b-carousel
@@ -26,18 +26,27 @@
                         <h3>{{ product.name }}</h3>
                         <p>{{ product.description }}</p>
                         <b-form-select id='quantity' v-model='selected' :options="options"></b-form-select>
-                        <b-button @click='addToCart(pId)'>Add</b-button>
+                        <b-button @click='addToCart(productId)'>Add</b-button>
                         <b-modal header-bg-variant="danger" v-model="modalShow">You must be logged in for that!</b-modal>
                     </b-col>
                 </b-row>
+                <div v-if="reviews.length == 0">
+                    No reviews yet
+                </div>
+                <div v-else>
+                    <ProductReview v-for="review in reviews" :key="review.customer_id" v-bind:data="review"></ProductReview>
+                </div>
             </b-container>
         </div>
     </div>
 </template>
 
 <script>
+import ProductReview from '@/components/ProductReview.vue'
 export default {
-    props: ['data'],
+    components: {
+        ProductReview
+    },
     name:'details',
     computed: {
         products() {
@@ -54,12 +63,13 @@ export default {
             options.push({value:i, text:i})
         }
         return {
-            pId:this.$route.params.pId,
+            productId: this.$route.params.productId,
             selected: null,
             options: options,
             slide: 0,
             sliding: null,
             modalShow: false,
+            reviews: []
         }
     },
     methods: {
@@ -69,14 +79,14 @@ export default {
         onSlideEnd(slide) {
             this.sliding = false
         },
-        addToCart(pId) {
+        addToCart(productId) {
             if(!this.loggedIn){
                 this.modalShow = !this.modalShow
             }else{
                 let url = this.$API_URL + `/order/add`
                 let options = {
                     method: 'POST',
-                    body: JSON.stringify({"product_id":pId, "customer_id":this.$store.state.auth.user.customer.id, "quantity":parseInt(document.getElementById('quantity').value), "discount":0, "date": new Date().toISOString()}),
+                    body: JSON.stringify({"productId":productId, "customer_id":this.$store.state.auth.user.customer.id, "quantity":parseInt(document.getElementById('quantity').value), "discount":0, "date": new Date().toISOString()}),
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -107,6 +117,19 @@ export default {
                     })
             }
         }
+    },
+    created() {
+        let url = this.$API_URL + `/reviews/` + this.productId
+        let options = {
+            method: 'GET',
+            headers: {
+                'Content-Type':'application/json'
+            }
+        }
+        
+        fetch(url, options)
+            .then(res => res.json())
+            .then(data => this.reviews = data)
     }
 }
 </script>
