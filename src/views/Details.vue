@@ -5,25 +5,26 @@
                 <b-row>
                     <b-col>
                         <b-carousel
-                        id="carousel-1"
-                        v-model="slide"
-                        :interval="4000"
-                        controls
-                        indicators
-                        background="white"
-                        img-width="400"
-                        img-height="auto"
-                        style="text-shadow: 1px 1px 2px #333;"
-                        @sliding-start="onSlideStart"
-                        @sliding-end="onSlideEnd">
-                            <b-carousel-slide :img-src="product.image"></b-carousel-slide>
-                            <div v-if="product.images.length > 0">
-                                <b-carousel-slide v-for="image in product.images" :key="image" :img-src="image.image_location"></b-carousel-slide>
-                            </div>  
+                            id="carousel-1"
+                            v-model="slide"
+                            :interval="4000"
+                            controls
+                            indicators
+                            background="white"
+                            img-width="400"
+                            img-height="auto"
+                            style="text-shadow: 1px 1px 2px #333;"
+                            @sliding-start="onSlideStart"
+                            @sliding-end="onSlideEnd">
+                                <b-carousel-slide :img-src="product.image"></b-carousel-slide>
+                                <div v-if="product.images.length > 0">
+                                    <b-carousel-slide v-for="image in product.images" :key="image" :img-src="image.image_location"></b-carousel-slide>
+                                </div>  
                         </b-carousel>
                     </b-col>
                     <b-col>
                         <h3>{{ product.name }}</h3>
+                        <h5>${{ product.price }}</h5>
                         <p>{{ product.description }}</p>
                         <b-form-select id='quantity' v-model='selected' :options="options"></b-form-select>
                         <b-button @click='addToCart(productId)'>Add</b-button>
