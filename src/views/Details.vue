@@ -86,7 +86,7 @@ export default {
                 let url = this.$API_URL + `/order/add`
                 let options = {
                     method: 'POST',
-                    body: JSON.stringify({"productId":productId, "customer_id":this.$store.state.auth.user.customer.id, "quantity":parseInt(document.getElementById('quantity').value), "discount":0, "date": new Date().toISOString()}),
+                    body: JSON.stringify({"product_id":productId, "customer_id":this.$store.state.auth.user.customer.id, "quantity":parseInt(document.getElementById('quantity').value), "discount":0, "date": new Date().toISOString()}),
                     headers: {
                         'Content-Type': 'application/json'
                     }
